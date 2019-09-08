@@ -92,9 +92,9 @@ class corp_dict(): #prouce
         
         
 class lda_model():
-    def __init__(self,topic_num,corpus,dictionary,ite,ps,ck_size,alpha,tf_idf = True): #decide topic num for LDA 
+    def __init__(self,topic_num,corpus,dictionary,ite,ps,ck_size,alpha,decay,tf_idf = True): #decide topic num for LDA 
         self.model = gensim.models.LdaMulticore(corpus=corpus,num_topics=topic_num,id2word=dictionary,chunksize=ck_size,
-                                                passes=ps,alpha=alpha,eval_every=1,iterations=ite)
+                                                passes=ps,alpha=alpha,eval_every=1,iterations=ite,decay=decay)
         self.k = topic_num
         self.corpus = corpus
         self.dic = dictionary
@@ -215,7 +215,7 @@ class lda_model():
         
         # hover tools
         hover = plot_lda.select(dict(type=HoverTool))
-        hover.tooltips = {"content": "@content - topic: @topic_key"}
+        hover.tooltips = {"content": "@content - topic: @topic_key - semantic: @semantic - label: @label"}
         
         # save the plot
         save(plot_lda, '{}.html'.format(title))
