@@ -60,6 +60,7 @@ if __name__=='__main__':
          min_tfidf = None
          for tf_idf in tfidf_v:
              for k in top_lst:
+                 print(k)
                  train_idx = rd.sample(range(len(corpus)),int(0.9*len(corpus)))
                  test_idx = list(set(range(len(corpus))).difference(set(train_idx)))
                  train_corp = cp_dic.get_extra(processed_docs[train_idx],tf_idf)
