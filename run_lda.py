@@ -36,7 +36,7 @@ if __name__=='__main__':
      parser.add_argument("-ite","--iteration",type = int,default = 5)
      parser.add_argument("-db","--dictionary_below",type = int,default = 10)
      parser.add_argument("-da","--dictionary_above",type = float,default = 0.9)
-     parser.add_argument("-wks","--workers",type = int,default = 3) #parrallized
+     #parser.add_argument("-wks","--workers",type = int,default = 3) #parrallized
      parser.add_argument("-al","--alpha",type = str,default = 'asymmetric')
      parser.add_argument("-dc","--decay",type = float,default = 0.5)
      
@@ -81,6 +81,13 @@ if __name__=='__main__':
          _lda_model = train_model()
          _lda_model.tsne_vis(data)
          _lda_model.lda_vis(corpus=corpus,dictionary=dictionary)
+     else:
+         _lda_model = lda_model(topic_num=args.k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
+                               ck_size=args.chunksize,alpha=args.alpha,tf_idf=args.tf_idf,decay = args.decay)
+         _lda_model.show_lda()
+         _lda_model.tsne_vis(data)
+         _lda_model.lda_vis(corpus = corpus,dictionary = dictionary)
+         
      
 
         
