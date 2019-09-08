@@ -47,7 +47,7 @@ if __name__=='__main__':
      corpus = cp_dic.corpus
      dictionary = cp_dic.dictionary     
      processed_docs = cp_dic.processed_docs
-     inp = 'test.json'
+     inp = open('test.json','rb')
      data = json.load(inp)
      inp.close()
      
