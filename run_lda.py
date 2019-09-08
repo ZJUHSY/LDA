@@ -63,8 +63,8 @@ if __name__=='__main__':
                  print(k)
                  train_idx = rd.sample(range(len(corpus)),int(0.9*len(corpus)))
                  test_idx = list(set(range(len(corpus))).difference(set(train_idx)))
-                 train_corp = cp_dic.get_extra(processed_docs[train_idx],tf_idf)
-                 test_corp = cp_dic.get_extra(processed_docs[test_idx],tf_idf)
+                 train_corp = cp_dic.get_extra(np.array(processed_docs)[train_idx],tf_idf)
+                 test_corp = cp_dic.get_extra(np.array(processed_docs)[test_idx],tf_idf)
                  
                  _lda_model = lda_model(topic_num=k,corpus=train_corp,dictionary=dictionary,ite=args.iteration,ps=args.passes,
                                ck_size=args.chunksize,alpha=args.alpha,tf_idf=tf_idf)

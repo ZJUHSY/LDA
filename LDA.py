@@ -42,7 +42,7 @@ class corp_dict(): #prouce
             self.data = pd.DataFrame(json.load(inp))
             inp.close()
             _inp = open('pro_docs.json','rb')
-            self.processed_docs = pd.DataFrame(json.load(_inp))
+            self.processed_docs = json.load(_inp)
             _inp.close()
             
             self.dictionary = gensim.corpora.Dictionary.load('dictionary.gensim')
