@@ -67,13 +67,13 @@ if __name__=='__main__':
                  test_corp = cp_dic.get_extra(np.array(processed_docs)[test_idx],tf_idf)
                  
                  _lda_model = lda_model(topic_num=k,corpus=train_corp,dictionary=dictionary,ite=args.iteration,ps=args.passes,
-                               ck_size=args.chunksize,alpha=args.alpha,tf_idf=tf_idf)
+                               ck_size=args.chunksize,alpha=args.alpha,tf_idf=tf_idf,decay = args.decay)
                  cur_prep = _lda_model.get_prep(test_corp)
                  if cur_prep < min_prep:
                      min_k,min_tfidf = k,tf_idf
                  print('topic:{0}--tf_idf{1}->prep:{2}'.format(k,tf_idf,cur_prep))
          _lda_model = lda_model(topic_num=min_k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
-                               ck_size=args.chunksize,alpha=args.alpha,tf_idf=min_tfidf)
+                               ck_size=args.chunksize,alpha=args.alpha,tf_idf=min_tfidf,decay = args.decay)
          
          _lda_model.save_model()
          return _lda_model
