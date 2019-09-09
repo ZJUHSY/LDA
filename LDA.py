@@ -177,7 +177,7 @@ class lda_model():
         color = ["#"+''.join([rd.choice('0123456789ABCDEF') for j in range(6)])
              for i in range(self.k)]
         source_data['color'] = np.array(color)[self.topic_arr]
-        source_data['content'] = data['passage'][_idx]
+        source_data['content'] = data['passage'].values[_idx]
         source_data['topic'] = self.topic_arr
         source_data['semantic'] = data['semantic'].values[_idx]
         source_data['label'] = data['label'].values[_idx]
