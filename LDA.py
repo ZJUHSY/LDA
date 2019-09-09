@@ -11,6 +11,7 @@ import os
 #load in/out data
 import pickle
 import json
+import random as rd
 #gensim packages
 import gensim
 from gensim.corpora.dictionary import Dictionary
@@ -21,13 +22,13 @@ from jieba_prepare import jb_cut
 #worldcloud
 #from matplotlib import pyplot as plt
 from wordcloud import WordCloud, STOPWORDS
-import matplotlib.colors as mcolors
+#import matplotlib.colors as mcolors
 from sklearn.manifold import TSNE
 
 #bokeh tools
-from bokeh.plotting import figure, output_file, show
-from bokeh.models import Label
-import matplotlib.colors as mcolors
+#from bokeh.plotting import figure, output_file, show
+#from bokeh.models import Label
+#import matplotlib.colors as mcolors
 #from bokeh.io import output_notebook
 import bokeh.plotting as bp
 from bokeh.plotting import save
@@ -171,8 +172,11 @@ class lda_model():
                                       'color','content','topic','semantic','label'])
         source_data['x_values'] = self.tsne_lda[:,0]
         source_data['y_values'] = self.tsne_lda[:,1]
-        mycolors = np.array([color for name, color in mcolors.TABLEAU_COLORS.items()])
+        #mycolors = np.array([color for name, color in mcolors.TABLEAU_COLORS.items()])
         #source_data['color'] = mycolors[self.topic_arr]
+        color = ["#"+''.join([rd.choice('0123456789ABCDEF') for j in range(6)])
+             for i in range(self.k)]
+        source_data['color'] = np.array(color)
         source_data['content'] = data['passage'][_idx]
         source_data['topic'] = self.topic_arr
         source_data['semantic'] = data['semantic'].values[_idx]
@@ -198,7 +202,7 @@ class lda_model():
                      tools="pan,wheel_zoom,box_zoom,reset,hover,previewsave",
                      x_axis_type=None, y_axis_type=None, min_border=1)
         
-        plot_lda.scatter(x='x_values', y='y_values',
+        plot_lda.scatter(x='x_values', y='y_values',color = 'color',
                  source=bp.ColumnDataSource(source_data))
         
         #add text
