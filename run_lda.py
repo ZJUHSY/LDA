@@ -23,9 +23,9 @@ from gensim.models import CoherenceModel
 if __name__=='__main__':
      parser = argparse.ArgumentParser()
      parser.add_argument("-k","--k",type = int,default = 5)#topic number
-     parser.add_argument("-tf","--tfidf",type = bool,default = True)
-     parser.add_argument("-tr","--train",type = bool,default = True)# whether or not select model
-     parser.add_argument("-ts",'--tsne',type = bool,default = True)# whether or not use tsne 
+     parser.add_argument("-tf","--tfidf",type = bool, default = True)
+     parser.add_argument("-tr","--train",type = bool, default = True)# whether or not select model
+     parser.add_argument("-ts",'--tsne',type = bool, default = True)# whether or not use tsne 
      
      
      '''
@@ -41,7 +41,7 @@ if __name__=='__main__':
      parser.add_argument("-dc","--decay",type = float,default = 0.5)
      
      args = parser.parse_args()
-     
+     print(args.train,args.tfidf)
      print('Get dic and corpus!')
      cp_dic = corp_dict(tf_idf = args.tfidf,dic_below = args.dictionary_below,dic_above = args.dictionary_above)
      corpus = cp_dic.corpus
@@ -81,7 +81,6 @@ if __name__=='__main__':
          return _lda_model
      
      if args.train:
-         print(args.train)
          _lda_model = train_model()
          _lda_model.tsne_vis(data)
          _lda_model.lda_vis(corpus=corpus,dictionary=dictionary)
