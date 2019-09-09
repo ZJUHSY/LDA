@@ -23,9 +23,9 @@ from gensim.models import CoherenceModel
 if __name__=='__main__':
      parser = argparse.ArgumentParser()
      parser.add_argument("-k","--k",type = int,default = 5)#topic number
-     parser.add_argument("-tf","--tfidf",type = bool, default = True)
-     parser.add_argument("-tr","--train",type = bool, default = True)# whether or not select model
-     parser.add_argument("-ts",'--tsne',type = bool, default = True)# whether or not use tsne 
+     parser.add_argument("-tf","--tfidf",action="store_true", default = False)
+     parser.add_argument("-tr","--train",action="store_true", default = False)# whether or not select model
+     #parser.add_argument("-ts",'--tsne',action="store_true", default = False)# whether or not use tsne 
      
      
      '''
