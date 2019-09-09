@@ -41,7 +41,7 @@ if __name__=='__main__':
      parser.add_argument("-dc","--decay",type = float,default = 0.5)
      
      args = parser.parse_args()
-     print(args.train,args.tfidf)
+     print(args.k,args.train,args.tfidf)
      print('Get dic and corpus!')
      cp_dic = corp_dict(tf_idf = args.tfidf,dic_below = args.dictionary_below,dic_above = args.dictionary_above)
      corpus = cp_dic.corpus
