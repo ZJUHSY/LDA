@@ -71,17 +71,21 @@ if __name__=='__main__':
                  cur_prep = _lda_model.get_prep(test_corp)
                  if cur_prep < min_prep:
                      min_k,min_tfidf = k,tf_idf
+                     min_prep = cur_prep
                  print('topic:{0}--tf_idf{1}->prep:{2}'.format(k,tf_idf,cur_prep))
          _lda_model = lda_model(topic_num=min_k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
                                ck_size=args.chunksize,alpha=args.alpha,tf_idf=min_tfidf,decay = args.decay)
          
          _lda_model.save_model()
+         print('min_k:{0},min_tfidf:{1},min_prep:{2}'.format(min_k,min_tfidf,min_prep))
          return _lda_model
      
      if args.train:
+         print(args.train)
          _lda_model = train_model()
          _lda_model.tsne_vis(data)
          _lda_model.lda_vis(corpus=corpus,dictionary=dictionary)
+         
      else:
          _lda_model = lda_model(topic_num=args.k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
                                ck_size=args.chunksize,alpha=args.alpha,tf_idf=args.tf_idf,decay = args.decay)
