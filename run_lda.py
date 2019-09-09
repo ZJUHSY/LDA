@@ -24,9 +24,9 @@ if __name__=='__main__':
      parser = argparse.ArgumentParser()
      parser.add_argument("-k","--k",type = int,default = 5)#topic number
      #parser.add_argument("-tf","--tfidf",action="store_false")
-     parser.add_argument('--tfidf', dest='tfidf', action='store_true')
-     parser.add_argument('--no-tfidf', dest='tfidf', action='store_false')
-     parser.set_defaults(tfidf=True)
+     parser.add_argument('--tfidf', dest='tf_idf', action='store_true')
+     parser.add_argument('--no-tfidf', dest='tf_idf', action='store_false')
+     parser.set_defaults(tf_idf=True)
      #parser.add_argument("-tr","--train",action="store_false")# whether or not select model
      parser.add_argument('--train', dest='train', action='store_true')
      parser.add_argument('--no-train', dest='train', action='store_false')
