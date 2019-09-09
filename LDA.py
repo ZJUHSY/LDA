@@ -172,7 +172,7 @@ class lda_model():
         source_data['x_values'] = self.tsne_lda[:,0]
         source_data['y_values'] = self.tsne_lda[:,1]
         mycolors = np.array([color for name, color in mcolors.TABLEAU_COLORS.items()])
-        source_data['color'] = mycolors[self.topic_arr]
+        #source_data['color'] = mycolors[self.topic_arr]
         source_data['content'] = data['passage'][_idx]
         source_data['topic'] = self.topic_arr
         source_data['semantic'] = data['semantic'].values[_idx]
@@ -199,7 +199,6 @@ class lda_model():
                      x_axis_type=None, y_axis_type=None, min_border=1)
         
         plot_lda.scatter(x='x_values', y='y_values',
-                 color='color',
                  source=bp.ColumnDataSource(source_data))
         
         #add text
