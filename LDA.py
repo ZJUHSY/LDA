@@ -179,7 +179,7 @@ class lda_model():
         source_data['color'] = np.array(color)[self.topic_arr]
         source_data['content'] = data['passage'].values[_idx]
         source_data['topic'] = self.topic_arr
-        source_data['semantic_value'] = data['semantic'].values[_idx]
+        source_data['semantic'] = data['semantic_value'].values[_idx]
         source_data['label'] = data['label'].values[_idx]
         
         #get each topic's key word to visualize
