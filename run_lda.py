@@ -97,6 +97,14 @@ if __name__=='__main__':
          #plot 
          
         #设置图形大小
+        #save file for safety
+         outp1 = open("perplexity_tfidf.json", 'w', encoding="utf-8")
+         outp1.write(json.dumps(tfidf_prep_v, indent=4, ensure_ascii=False))
+         outp1.close()
+         outp2 = open("perplexity.json", 'w', encoding="utf-8")
+         outp2.write(json.dumps(prep_v, indent=4, ensure_ascii=False))
+         outp2.close()
+         
          plt.figure(figsize=(20,8),dpi=80)
         # color可以百度颜色代码
          plt.plot(top_lst,tfidf_prep_v,label="tf_idf",color="#F08080")
