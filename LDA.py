@@ -210,7 +210,7 @@ class lda_model():
         for topic_num in self.topic_arr:
           if not np.isnan(topic_coord).any():
             break
-          topic_coord[topic_num] = self.tsne_lda[self.topic_arr.index(topic_num)]
+          topic_coord[topic_num] = self.tsne_lda[list(self.topic_arr).index(topic_num)]
         
         # plot crucial words
         for i in range(self.doc_topic_weight.shape[1]):
