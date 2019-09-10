@@ -20,6 +20,7 @@ from LDA import lda_model, corp_dict
 import random as rd
 from gensim.models import CoherenceModel
 import pandas as pd
+import matplotlib.pyplot as plt
 
 if __name__=='__main__':
      parser = argparse.ArgumentParser()
@@ -60,11 +61,14 @@ if __name__=='__main__':
      
      def train_model():
          print('choose topics!')
-         top_lst = list(range(2,11)) + list(range(12,20,2)) + list(range(20,100,10))
+         top_lst = list(range(2,11)) + list(range(12,20,2)) + list(range(20,3,51)) + list(range(55,101,5))
          tfidf_v = [True,False]
          min_prep = 10000000#init
          min_k=-1
          min_tfidf = None
+         #record to plot
+         tfidf_prep_v = []
+         prep_v = []
          for tf_idf in tfidf_v:
              for k in top_lst:
                  print(k)
@@ -80,17 +84,39 @@ if __name__=='__main__':
                      min_k,min_tfidf = k,tf_idf
                      min_prep = cur_prep
                  print('topic:{0}--tf_idf{1}->prep:{2}'.format(k,tf_idf,cur_prep))
-         _lda_model = lda_model(topic_num=min_k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
-                               ck_size=args.chunksize,alpha=args.alpha,tf_idf=min_tfidf,decay = args.decay)
-         
-         _lda_model.save_model()
+#         _lda_model = lda_model(topic_num=min_k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
+#                               ck_size=args.chunksize,alpha=args.alpha,tf_idf=min_tfidf,decay = args.decay)
+                 if tf_idf:
+                     tfidf_prep_v.append(cur_prep)
+                 else:
+                     prep_v.append(cur_prep)
+         #_lda_model.save_model()
          print('min_k:{0},min_tfidf:{1},min_prep:{2}'.format(min_k,min_tfidf,min_prep))
-         return _lda_model
+         #return _lda_model
+         
+         #plot 
+         
+        #设置图形大小
+         plt.figure(figsize=(20,8),dpi=80)
+        # color可以百度颜色代码
+         plt.plot(top_lst,tfidf_prep_v,label="tf_idf",color="#F08080")
+         plt.plot(top_lst,prep_v,label="no-tf_idf",color="#DB7093",linestyle="--")
+         plt.xlabel('number of topics')
+         plt.ylabel('log_perplexity')
+         plt.grid(alpha=0.4,linestyle=':')
+        #添加图例，prop指定图例的字体, loc参数可以查看源码
+         plt.legend(loc="upper left")
+         plt.savefig('train.jpg')
+
+
+         
+         
      
      if args.train:
-         _lda_model = train_model()
-         _lda_model.tsne_vis(data)
-         _lda_model.lda_vis(corpus=corpus,dictionary=dictionary)
+#         _lda_model = train_model()
+#         _lda_model.tsne_vis(data)
+#         _lda_model.lda_vis(corpus=corpus,dictionary=dictionary)
+         train_model() #only plot but not directly get the most suitable model/see it from eye
          
      else:
          _lda_model = lda_model(topic_num=args.k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
