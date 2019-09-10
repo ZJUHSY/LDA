@@ -185,7 +185,7 @@ class lda_model():
         #get each topic's key word to visualize
         topic_summaries = []
         for i in range(self.k):
-            keys = [x for x in self.model.show_topic(i,topn=topn)]
+            keys = [x[0] for x in self.model.show_topic(i,topn=topn)]
             topic_summaries.append(' '.join(keys))
         
             
