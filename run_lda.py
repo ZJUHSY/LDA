@@ -61,7 +61,7 @@ if __name__=='__main__':
      
      def train_model():
          print('choose topics!')
-         top_lst = list(range(2,11)) + list(range(12,20,2)) + list(range(20,3,51)) + list(range(55,101,5))
+         top_lst = list(range(2,11)) + list(range(12,20,2)) + list(range(20,51,3)) + list(range(55,101,5))
          tfidf_v = [True,False]
          min_prep = 10000000#init
          min_k=-1
@@ -83,6 +83,7 @@ if __name__=='__main__':
                  if cur_prep < min_prep:
                      min_k,min_tfidf = k,tf_idf
                      min_prep = cur_prep
+                 print(min_k,min_tfidf)
                  print('topic:{0}--tf_idf{1}->prep:{2}'.format(k,tf_idf,cur_prep))
 #         _lda_model = lda_model(topic_num=min_k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
 #                               ck_size=args.chunksize,alpha=args.alpha,tf_idf=min_tfidf,decay = args.decay)
