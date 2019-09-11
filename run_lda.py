@@ -21,6 +21,7 @@ import random as rd
 from gensim.models import CoherenceModel
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib
 
 if __name__=='__main__':
      parser = argparse.ArgumentParser()
@@ -106,6 +107,7 @@ if __name__=='__main__':
          outp2.write(json.dumps(prep_v, indent=4, ensure_ascii=False))
          outp2.close()
          
+         matplotlib.use('pdf') #prevent linux server cmd error
          plt.figure(figsize=(20,8),dpi=80)
         # color可以百度颜色代码
          plt.plot(top_lst,tfidf_prep_v,label="tf_idf",color="#F08080")
