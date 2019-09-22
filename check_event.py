@@ -118,6 +118,7 @@ if __name__=='__main__':
     _path = os.getcwd() + '\\semantic_plot\\' + args.start_time + '---' + args.end_time + '--' + gran + '.jpg'
     
     mpl.rcParams['agg.path.chunksize'] = 10000
+    mpl.use('pdf')#for cmd command
     plt.figure(figsize=(20,10),dpi=300)
 #data.set_index('time')
     plt.plot(tmp['scale_semantic'])
