@@ -182,8 +182,8 @@ class lda_model():
         #source_data = pd.DataFrame(columns = ['x_values','y_values',
                                       #'color','content','topic','semantic','label'])
         source_data = pd.DataFrame()
-        source_data['x_values'] = self.tsne_lda[:,0]
-        source_data['y_values'] = self.tsne_lda[:,1]
+        source_data['x_values'] = np.array(self.tsne_lda[:,0])
+        source_data['y_values'] = np.array(self.tsne_lda[:,1])
         #mycolors = np.array([color for name, color in mcolors.TABLEAU_COLORS.items()])
         #source_data['color'] = mycolors[self.topic_arr]
         color = ["#"+''.join([rd.choice('0123456789ABCDEF') for j in range(6)])
@@ -202,7 +202,7 @@ class lda_model():
             topic_summaries.append(' '.join(keys))
         
         
-        CDS = bp.ColumnDataSource(data = dict(x_values = self.tsne_lda[:,0],y_values = self.tsne_lda[:,1],
+        CDS = bp.ColumnDataSource(data = dict(x_values = np.array(self.tsne_lda[:,0]),y_values = np.array(self.tsne_lda[:,1]),
                 color = np.array(color)[self.topic_arr],content = data['passage'].values[_idx],topic = np.array(self.topic_arr)
                 ,semantic = data['semantic_value'].values[_idx],label = data['label'].values[_idx]))
         #bokeh visualize
