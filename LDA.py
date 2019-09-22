@@ -179,8 +179,9 @@ class lda_model():
         '''
         prepare souce data for bokeh
         '''
-        source_data = pd.DataFrame(columns = ['x_values','y_values',
+        #source_data = pd.DataFrame(columns = ['x_values','y_values',
                                       'color','content','topic','semantic','label'])
+        source_data = pd.DataFrame()
         source_data['x_values'] = self.tsne_lda[:,0]
         source_data['y_values'] = self.tsne_lda[:,1]
         #mycolors = np.array([color for name, color in mcolors.TABLEAU_COLORS.items()])
@@ -201,14 +202,18 @@ class lda_model():
             topic_summaries.append(' '.join(keys))
         
             
-        
+        CDS = bp.ColumnDataSourcedata(data = dict(x_values = self.tsne_lda[:,0],y_values = self.tsne_lda[:,1],
+                color = np.array(color)[self.topic_arr],content = data['passage'].values[_idx],topic = np.array(self.topic_arr)
+                ,semantic = data['semanic_value'].values[_idx],label = data['label'].values[_idx]))
         #bokeh visualize
         str_tfidf = ''
         if self.tf_idf:
             str_tfidf = '-tfidf'
-        title = os.getcwd() + '\\HTML\\'
-        title += 'per-document-tsne-vis' + 'lda_model' + str(self.k) + str_tfidf 
+        title = os.getcwd() 
+        title += '\\HTML\\' +'per-document-tsne-vis' + 'lda_model' + str(self.k) + str_tfidf 
         #num_example = self.doc_topic_weight.shape[0]
+        print(title)
+        
         
         plot_lda = bp.figure(plot_width=1400, plot_height=1100,
                      title=title,
