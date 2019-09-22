@@ -53,6 +53,7 @@ if __name__=='__main__':
     data['time'] = pd.to_datetime(data.time.values)
     #sort time 1st
     data = data.sort_index(by = 'time',ascending = True)
+    data = data.drop_duplicates(subset=['passage'], keep=False)
     labels = data['label'].values
     passages = data['passage'].values
     headlines = data['headline'].values
@@ -151,11 +152,10 @@ if __name__=='__main__':
     print('Begin LDA Modeling')
     _lda_model = lda_model(topic_num=args.k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
                                ck_size=args.chunksize,alpha=args.alpha,tf_idf=args.tf_idf,decay = args.decay,path = 'lda_model8-tf_idf')
-    #_lda_model = gensim.models.ldamodel.LdaModel.load('lda_model8-tf_idf')
-    #_lda_model.save_model()
-    _lda_model.tsne_vis(data,time_index = sel_idx) #select index
+    _lda_model.save_model()
+    #_lda_model.tsne_vis(data,time_index = sel_idx) #select index
     #_lda_model.lda_vis(corpus = corpus,dictionary = dictionary)
-    
+    _lda_model.tsne_vis(data,time_index = sel_idx)
     
 
     
