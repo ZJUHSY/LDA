@@ -155,7 +155,8 @@ if __name__=='__main__':
     _lda_model.save_model()
     #_lda_model.tsne_vis(data,time_index = sel_idx) #select index
     #_lda_model.lda_vis(corpus = corpus,dictionary = dictionary)
-    _lda_model.tsne_vis(data,time_index = sel_idx)
+    #_lda_model.tsne_vis(data,time_index = sel_idx)
+    _lda_model.tsne_vis(data)
     
 
     
