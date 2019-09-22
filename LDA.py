@@ -93,8 +93,11 @@ class corp_dict(): #prouce
         
         
 class lda_model():
-    def __init__(self,topic_num,corpus,dictionary,ite,ps,ck_size,alpha,decay,tf_idf = True): #decide topic num for LDA 
-        self.model = gensim.models.LdaMulticore(corpus=corpus,num_topics=topic_num,id2word=dictionary,chunksize=ck_size,
+    def __init__(self,topic_num,corpus,dictionary,ite,ps,ck_size,alpha,decay,tf_idf = True,path = None): #decide topic num for LDA 
+        if path and os.path.isfile(path):
+            self.model = gensim.models.ldamodel.LdaModel.load(path)
+        else:
+            self.model = gensim.models.LdaMulticore(corpus=corpus,num_topics=topic_num,id2word=dictionary,chunksize=ck_size,
                                                 passes=ps,alpha=alpha,eval_every=1,iterations=ite,decay=decay)
         self.k = topic_num
         self.corpus = corpus
@@ -139,9 +142,16 @@ class lda_model():
     
     #visualize per-document tsne projection 
     ### output: html representaions
-    def tsne_vis(self,data,threshold = 0.5,topn = 5): #data is the source of the data
+    '''
+    time index is for chosen time
+    '''
+    def tsne_vis(self,data,threshold = 0.5,topn = 5,time_index = None): #data is the source of the data
         #extract matrix
-        doc_topic_mat = self.model[self.corpus]
+        corpus = self.corpus
+        if time_index.any():
+            corpus = list(np.array(self.corpus)[time_index]) #time_index for select certain corpus to illustrate
+            data = data.loc[time_index,] #select data from index
+        doc_topic_mat = self.model[corpus]
         doc_topic_weight = []
         for doc in doc_topic_mat:
             arr = np.zeros(self.k)
@@ -156,6 +166,7 @@ class lda_model():
         
         #extract ooint to reduce perplexity
         #threshold = 0.5
+        
         _idx = np.amax(doc_topic_weight, axis=1) > threshold  # idx of doc that above the threshold
         self.doc_topic_weight = np.array(doc_topic_weight)[_idx]#get per-doc topic weight matrix for tsne
         self.topic_arr = np.argmax(self.doc_topic_weight, axis=1)#every most document's most related topic
@@ -181,7 +192,8 @@ class lda_model():
         source_data['topic'] = self.topic_arr
         source_data['semantic'] = data['semantic_value'].values[_idx]
         source_data['label'] = data['label'].values[_idx]
-        
+        source_data = source_data.fillna('')
+        print(source_data.isnull().any())
         #get each topic's key word to visualize
         topic_summaries = []
         for i in range(self.k):
@@ -194,7 +206,8 @@ class lda_model():
         str_tfidf = ''
         if self.tf_idf:
             str_tfidf = '-tfidf'
-        title = 'per-document-tsne-vis' + 'lda_model' + str(self.k) + str_tfidf 
+        title = os.getcwd() + '\\HTML\\'
+        title += 'per-document-tsne-vis' + 'lda_model' + str(self.k) + str_tfidf 
         #num_example = self.doc_topic_weight.shape[0]
         
         plot_lda = bp.figure(plot_width=1400, plot_height=1100,
