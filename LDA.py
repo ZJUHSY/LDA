@@ -201,8 +201,8 @@ class lda_model():
             keys = [x[0] for x in self.model.show_topic(i,topn=topn)]
             topic_summaries.append(' '.join(keys))
         
-            
-        CDS = bp.ColumnDataSourcedata(data = dict(x_values = self.tsne_lda[:,0],y_values = self.tsne_lda[:,1],
+        
+        CDS = bp.ColumnDataSource(data = dict(x_values = self.tsne_lda[:,0],y_values = self.tsne_lda[:,1],
                 color = np.array(color)[self.topic_arr],content = data['passage'].values[_idx],topic = np.array(self.topic_arr)
                 ,semantic = data['semanic_value'].values[_idx],label = data['label'].values[_idx]))
         #bokeh visualize
