@@ -204,7 +204,7 @@ class lda_model():
         
         CDS = bp.ColumnDataSource(data = dict(x_values = self.tsne_lda[:,0],y_values = self.tsne_lda[:,1],
                 color = np.array(color)[self.topic_arr],content = data['passage'].values[_idx],topic = np.array(self.topic_arr)
-                ,semantic = data['semanic_value'].values[_idx],label = data['label'].values[_idx]))
+                ,semantic = data['semantic_value'].values[_idx],label = data['label'].values[_idx]))
         #bokeh visualize
         str_tfidf = ''
         if self.tf_idf:
@@ -220,10 +220,10 @@ class lda_model():
                      tools="pan,wheel_zoom,box_zoom,reset,hover,previewsave",
                      x_axis_type=None, y_axis_type=None, min_border=1)
         
-#        plot_lda.scatter(x='x_values', y='y_values',color = 'color',
-#                 source=bp.ColumnDataSource(source_data))
         plot_lda.scatter(x='x_values', y='y_values',color = 'color',
-                 source=CDS)
+                 source=bp.ColumnDataSource(source_data))
+#        plot_lda.scatter(x='x_values', y='y_values',color = 'color',
+#                 source=CDS)
         #add text
         topic_coord = np.empty((self.doc_topic_weight.shape[1], 2)) * np.nan
         for topic_num in self.topic_arr:
