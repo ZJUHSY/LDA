@@ -160,7 +160,7 @@ class lda_model():
                 topics = [x[0] for x in doc]
                 arr[topics] = topic_weight
             else:
-                arr = topic_weight
+                arr = np.array(topic_weight)
             doc_topic_weight.append(arr)
        
         
@@ -226,14 +226,13 @@ class lda_model():
 #                 source=CDS)
         #add text
         topic_coord = np.empty((self.doc_topic_weight.shape[1], 2)) * np.nan
-        for topic_num in self.topic_arr:
-          if not np.isnan(topic_coord).any():
-            break
+        for topic_num in np.unique(self.topic_arr):
           topic_coord[topic_num] = self.tsne_lda[list(self.topic_arr).index(topic_num)]
         
         # plot crucial words
         for i in range(self.doc_topic_weight.shape[1]):
-          plot_lda.text(topic_coord[i, 0], topic_coord[i, 1], [topic_summaries[i]])
+            if not (np.isnan(topic_coord[i,0]) or np.isnan(topic_coord[i,1])):
+                 plot_lda.text(topic_coord[i, 0], topic_coord[i, 1], [topic_summaries[i]])
         
         # hover tools
         hover = plot_lda.select(dict(type=HoverTool))
