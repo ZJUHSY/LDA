@@ -148,7 +148,7 @@ class lda_model():
     def tsne_vis(self,data,threshold = 0.5,topn = 5,time_index = None): #data is the source of the data
         #extract matrix
         corpus = self.corpus
-        if time_index.any():
+        if time_index and time_index.any():
             corpus = list(np.array(self.corpus)[time_index]) #time_index for select certain corpus to illustrate
             data = data.loc[time_index,] #select data from index
         doc_topic_mat = self.model[corpus]
