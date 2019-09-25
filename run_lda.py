@@ -60,6 +60,7 @@ if __name__=='__main__':
      data = pd.DataFrame(json.load(inp))
      inp.close()
      
+     
      def train_model():
          print('choose topics!')
          top_lst = list(range(2,11)) + list(range(12,20,2)) + list(range(20,51,3)) + list(range(55,101,5))
@@ -132,9 +133,9 @@ if __name__=='__main__':
      else:
          _lda_model = lda_model(topic_num=args.k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
                                ck_size=args.chunksize,alpha=args.alpha,tf_idf=args.tf_idf,decay = args.decay)
-         _lda_model.show_lda()
-         _lda_model.tsne_vis(data)
-         _lda_model.lda_vis(corpus = corpus,dictionary = dictionary)
+         #_lda_model.show_lda()
+         #_lda_model.tsne_vis(data)
+         _lda_model.lda_vis()
          
      
 

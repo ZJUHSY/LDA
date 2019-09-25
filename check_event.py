@@ -37,23 +37,31 @@ if __name__=='__main__':
     parser.add_argument("-cksz","--chunksize",type = int,default = 32)
     parser.add_argument("-ps","--passes",type = int,default = 10)
     parser.add_argument("-ite","--iteration",type = int,default = 5)
-    parser.add_argument("-db","--dictionary_below",type = int,default = 10)
+    parser.add_argument("-db","--dictionary_below",type = int,default = 15)
     parser.add_argument("-da","--dictionary_above",type = float,default = 0.9)
     parser.add_argument("-al","--alpha",type = str,default = 'asymmetric')
     parser.add_argument("-dc","--decay",type = float,default = 0.5)
     
     args = parser.parse_args()
     
-    #get data prepared and LDA model ready
+#    def process_data(path = 'test.json'):
+#        inp = open(path,'rb')
+#        data = json.load(inp)
+#        data = pd.DataFrame(data)
+#        data = data.fillna('') #na request
+#        inp.close()
+#        data['time'] = pd.to_datetime(data.time.values)
+#        #sort time 1st
+#        data = data.sort_index(by = 'time',ascending = True)
+#        data = data.drop_duplicates(subset=['passage'], keep=False)
+        
     inp = open('test.json','rb')
     data = json.load(inp)
     data = pd.DataFrame(data)
-    data = data.fillna('') #na request
-    inp.close()
+    print(data.head())
     data['time'] = pd.to_datetime(data.time.values)
-    #sort time 1st
-    data = data.sort_index(by = 'time',ascending = True)
-    data = data.drop_duplicates(subset=['passage'], keep=False)
+    #get data prepared and LDA model ready
+    
     labels = data['label'].values
     passages = data['passage'].values
     headlines = data['headline'].values
@@ -116,7 +124,7 @@ if __name__=='__main__':
     
     #plot
     _xlabel = 'time' + 'granularity: '+gran
-    _path = os.getcwd() + '\\semantic_plot\\' + args.start_time + '---' + args.end_time + '--' + gran + '.jpg'
+    _path = os.getcwd() + '\\semantic_plot\\' + args.start_time + '--' + args.end_time + '--' + gran + '.jpg'
     
     mpl.rcParams['agg.path.chunksize'] = 10000
     mpl.use('pdf')#for cmd command
@@ -131,7 +139,7 @@ if __name__=='__main__':
     
     
     #select abnormal text and using LDA-tsne VIS for comparison
-    sel_day = str(np.argmax(tmp['semantic_arr']))
+    sel_day = str(np.argmin(tmp['semantic_arr']))
     if gran=='day':
         _from = datetime.datetime.strptime(sel_day, '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
         _from = datetime.datetime.strptime(_from,'%Y-%m-%d')
@@ -153,10 +161,12 @@ if __name__=='__main__':
     _lda_model = lda_model(topic_num=args.k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
                                ck_size=args.chunksize,alpha=args.alpha,tf_idf=args.tf_idf,decay = args.decay,path = 'lda_model8-tf_idf')
     _lda_model.save_model()
+    print(sel_day)
     #_lda_model.tsne_vis(data,time_index = sel_idx) #select index
-    #_lda_model.lda_vis(corpus = corpus,dictionary = dictionary)
+    _lda_model.lda_vis()
+    #_lda_model.lda_vis(sel_idx)
     #_lda_model.tsne_vis(data,time_index = sel_idx)
-    _lda_model.tsne_vis(data)
-    
+    #_lda_model.tsne_vis(data)
+
 
     
