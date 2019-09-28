@@ -33,7 +33,7 @@ if __name__=='__main__':
      #parser.add_argument("-tr","--train",action="store_false")# whether or not select model
      parser.add_argument('--train', dest='train', action='store_true')
      parser.add_argument('--no-train', dest='train', action='store_false')
-     parser.set_defaults(train_model=True)
+     parser.set_defaults(train=True)
      #parser.add_argument("-ts",'--tsne',action="store_true", default = False)# whether or not use tsne 
      
      
@@ -60,7 +60,7 @@ if __name__=='__main__':
      data = pd.DataFrame(json.load(inp))
      inp.close()
      
-     print(args.train_model)
+     print(args.train)
      
      def train_model():
          print('choose topics!')
@@ -125,7 +125,7 @@ if __name__=='__main__':
          
          
      
-     if args.train_model:
+     if args.train:
 #         _lda_model = train_model()
 #         _lda_model.tsne_vis(data)
 #         _lda_model.lda_vis(corpus=corpus,dictionary=dictionary)
@@ -136,6 +136,7 @@ if __name__=='__main__':
          _lda_model = lda_model(topic_num=args.k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
                                ck_size=args.chunksize,alpha=args.alpha,tf_idf=args.tf_idf,decay = args.decay)
          _lda_model.show_lda()
+         _lda_model.save_model()
          #_lda_model.tsne_vis(data)
          _lda_model.lda_vis()
          
