@@ -139,7 +139,8 @@ if __name__=='__main__':
          _lda_model.save_model()
          #_lda_model.tsne_vis(data)
          _lda_model.lda_vis()
-         
+         _lda_model.wordcloud_topic()
+         _lda_model.tsne_vis(data)
      
 
         

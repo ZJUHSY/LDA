@@ -176,7 +176,7 @@ class lda_model():
         for doc in doc_topic_mat:
             #print(doc)
             if isinstance(doc,tuple):
-                doc = [doc] #change to list
+                doc = [doc] #change to list #prevent in case one element
             arr = np.zeros(self.k)
             topic_weight = [x[1] for x in doc]
             if len(topic_weight) < self.k:
@@ -233,11 +233,11 @@ class lda_model():
             color_arr = color_arr[self.topic_arr]
             color_arr = np.array(color_arr)
         label_color = '#000000' #using labeld color to select event point
-        color_arr[time_index] = label_color
+        #color_arr[time_index] = label_color
         source_data['color'] = color_arr[_idx]#np.array(color)[self.topic_arr]
         source_data['content'] = data['passage'].values[_idx]
         source_data['topic'] = self.topic_arr[_idx]
-        source_data['semantic'] = data['semantic_value'].values[_idx]
+        #source_data['semantic'] = data['semantic_value'].values[_idx]
         source_data['label'] = data['label'].values[_idx]
         source_data = source_data.fillna('')
         #print(source_data.isnull().any())
@@ -284,15 +284,17 @@ class lda_model():
             if not (np.isnan(topic_coord[i,0]) or np.isnan(topic_coord[i,1])):
                  plot_lda.text(topic_coord[i, 0], topic_coord[i, 1], [topic_summaries[i]])
         #plot labels
-        sel_idx = np.where(time_index==True)[0]
-        for _idx in sel_idx:
-            print(_idx,self.tsne_lda[_idx])
-            plot_lda.text(self.tsne_lda[_idx,0],self.tsne_lda[_idx,1],['EVENT'])
+        if len(time_index)!=0:
+            
+            sel_idx = np.where(time_index==True)[0]
+            for _idx in sel_idx:
+                print(_idx,self.tsne_lda[_idx])
+                plot_lda.text(self.tsne_lda[_idx,0],self.tsne_lda[_idx,1],['EVENT'])
             
         # hover tools
         hover = plot_lda.select(dict(type=HoverTool))
-        hover.tooltips = {"content": "@content - topic: @topic - semantic: @semantic - label: @label"}
-            
+#        hover.tooltips = {"content": "@content - topic: @topic - semantic: @semantic - label: @label"}
+        hover.tooltips = {"content": "@content - topic: @topic - label: @label"}
         
         # save the plot
         save(plot_lda, '{}.html'.format(title))
