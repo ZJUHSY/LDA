@@ -129,13 +129,14 @@ if __name__=='__main__':
 #         _lda_model = train_model()
 #         _lda_model.tsne_vis(data)
 #         _lda_model.lda_vis(corpus=corpus,dictionary=dictionary)
+         print('begin training!')
          train_model() #only plot but not directly get the most suitable model/see it from eye
          
      else:
          _lda_model = lda_model(topic_num=args.k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
                                ck_size=args.chunksize,alpha=args.alpha,tf_idf=args.tf_idf,decay = args.decay)
          _lda_model.show_lda()
-         _lda_model.tsne_vis(data)
+         #_lda_model.tsne_vis(data)
          _lda_model.lda_vis()
          
      
