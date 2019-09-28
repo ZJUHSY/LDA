@@ -112,7 +112,7 @@ class corp_dict(): #prouce
         
 class lda_model():
     def __init__(self,topic_num,corpus,dictionary,ite,ps,ck_size,alpha,decay,tf_idf = True,path = None): #decide topic num for LDA 
-        self.word_pathe = os.getcwd()
+        self.work_pathe = os.getcwd()
         self.corpus = corpus
         self.dic = dictionary
         self.tf_idf = tf_idf
