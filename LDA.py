@@ -283,8 +283,7 @@ class lda_model():
         # plot crucial words
         for i in range(self.doc_topic_weight.shape[1]):
             if not (np.isnan(topic_coord[i,0]) or np.isnan(topic_coord[i,1])):
-         
-            plot_lda.text(topic_coord[i, 0], topic_coord[i, 1], [topic_summaries[i]])
+                plot_lda.text(topic_coord[i, 0], topic_coord[i, 1], [topic_summaries[i]])
             
             
         #plot labels
