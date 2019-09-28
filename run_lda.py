@@ -125,7 +125,7 @@ if __name__=='__main__':
          
          
      
-     if args.train:
+     if args.train_model:
 #         _lda_model = train_model()
 #         _lda_model.tsne_vis(data)
 #         _lda_model.lda_vis(corpus=corpus,dictionary=dictionary)
