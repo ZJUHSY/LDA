@@ -312,8 +312,8 @@ class lda_model():
         #save to html
         # topic_num = 4
         save_name = os.getcwd() + '/HTML/'
-    
-        save_name += 'lda' + str(self.k)
+        
+        save_name += 'lda' + str(self.k) + '--tfidf' if self.tf_idf else ''
         if len(time_index)!=0:
             save_name += '--event-LDA'
         save_name += '.html'
@@ -331,7 +331,7 @@ class lda_model():
             ext_list = [' '.join(x) for x in np.array(self.processed_docs)]
         ext_list = ' '.join(ext_list)
         wc.generate(ext_list)
-        wc.to_file('event-wordcloud.png')
+        wc.to_file(os.getcwd()+'/HTML/event-wordcloud.png')
                 
 #        cols = [color for name, color in mcolors.TABLEAU_COLORS.items()]  # more colors: 'mcolors.XKCD_COLORS'
 #        cloud = WordCloud(stopwords=stop_words,
