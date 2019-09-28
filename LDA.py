@@ -56,9 +56,9 @@ class corp_dict(): #prouce
         
         if os.path.isfile('dictionary.gensim') and not new:#if new,corpus beside model should be loaded
             #load data
-            inp = open(path,'rb')
-            self.data = pd.DataFrame(json.load(inp))
-            inp.close()
+#            inp = open(path,'rb')
+#            self.data = pd.DataFrame(json.load(inp))
+#            inp.close()
             _inp = open(self.work_pathe + '\\data\\pro_docs.json','rb')
             self.processed_docs = json.load(_inp)
             _inp.close()
