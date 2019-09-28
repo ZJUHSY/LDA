@@ -59,7 +59,7 @@ class corp_dict(): #prouce
 #            inp = open(path,'rb')
 #            self.data = pd.DataFrame(json.load(inp))
 #            inp.close()
-            _inp = open(self.work_pathe + '\\data\\pro_docs.json','rb')
+            _inp = open(self.work_pathe + '/data/pro_docs.json','rb')
             self.processed_docs = json.load(_inp)
             _inp.close()
             
@@ -76,7 +76,7 @@ class corp_dict(): #prouce
             processed_docs = [wordtokenizer(x) for x in passages]
             self.processed_docs = processed_docs #used for train
             
-            outp = open(self.work_pathe + "\\data\\pro_docs.json", 'w', encoding="utf-8")
+            outp = open(self.work_pathe + "/data/pro_docs.json", 'w', encoding="utf-8")
             outp.write(json.dumps(self.processed_docs, indent=4, ensure_ascii=False))
             outp.close()
             
@@ -131,7 +131,7 @@ class lda_model():
         str_tfidf = ''
         if self.tf_idf:
             str_tfidf = '-tf_idf'
-        save_name = self.work_pathe + '\\model\\lda_model' + str(self.k) + str_tfidf 
+        save_name = self.work_pathe + '/model/lda_model' + str(self.k) + str_tfidf 
         #if not os.path.isfile(save_name):
         self.model.save(save_name)
     
@@ -260,7 +260,7 @@ class lda_model():
         if len(time_index)!=0:
             str_event = '--event-labeled'
         title = os.getcwd() 
-        title += '\\HTML\\' +'per-document-tsne-vis' + 'lda_model' + str(self.k) + str_tfidf + str_event
+        title += '/HTML/' +'per-document-tsne-vis' + 'lda_model' + str(self.k) + str_tfidf + str_event
         #num_example = self.doc_topic_weight.shape[0]
         print(title)
         
@@ -306,7 +306,7 @@ class lda_model():
         #pyLDAvis.display(lda_display) 
         #save to html
         # topic_num = 4
-        save_name = os.getcwd() + '\\HTML\\'
+        save_name = os.getcwd() + '/HTML/'
     
         save_name += 'lda' + str(self.k)
         if len(time_index)!=0:
@@ -317,7 +317,7 @@ class lda_model():
     def wordcloud_topic(self,sel_idx = []):
         #font = r'C:\\Windows\\Fonts\\simhei.ttf'
         wc = wordcloud.WordCloud()
-        _inp = open('pro_docs.json','rb')
+        _inp = open(self.work_pathe + '/data/pro_docs.json','rb')
         self.processed_docs = json.load(_inp)
         _inp.close()
         if len(sel_idx)!=0:
