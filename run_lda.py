@@ -133,6 +133,7 @@ if __name__=='__main__':
          train_model() #only plot but not directly get the most suitable model/see it from eye
          
      else:
+         print('begin VIS')
          _lda_model = lda_model(topic_num=args.k,corpus=corpus,dictionary=dictionary,ite=args.iteration,ps=args.passes,
                                ck_size=args.chunksize,alpha=args.alpha,tf_idf=args.tf_idf,decay = args.decay)
          _lda_model.show_lda()
