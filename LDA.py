@@ -312,11 +312,12 @@ class lda_model():
         #save to html
         # topic_num = 4
         save_name = os.getcwd() + '/HTML/'
-        
-        save_name += 'lda' + str(self.k) + '--tfidf' if self.tf_idf else ''
+        str_tfidf = '--tfidf' if self.tf_idf else ''
+        save_name += 'lda' + str(self.k) + str_tfidf
         if len(time_index)!=0:
             save_name += '--event-LDA'
         save_name += '.html'
+        print(save_name)
         pyLDAvis.save_html(lda_display, save_name)
     
     def wordcloud_topic(self,sel_idx = []):
