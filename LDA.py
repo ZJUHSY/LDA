@@ -48,10 +48,14 @@ def process_data(path = 'test.json'):
 
 class corp_dict(): #prouce 
     def __init__(self,path = 'test.json',tf_idf = True,dic_below = 5,dic_above = 0.9,dic_keep = 30000,new = False): #tf_idf: whether or not use tf_idf method to produce
+        
+        inp = open(path,'rb')
+        self.data = pd.DataFrame(json.load(inp))
+        inp.close()
+        self.work_pathe = os.getcwd()
+        
         if os.path.isfile('dictionary.gensim') and not new:#if new,corpus beside model should be loaded
             #load data
-            self.work_pathe = os.getcwd()
-            
             inp = open(path,'rb')
             self.data = pd.DataFrame(json.load(inp))
             inp.close()
@@ -67,6 +71,7 @@ class corp_dict(): #prouce
             return
         else:
             #use jieba to produce word list 
+            print(self.work_pathe)
             passages = self.data['passage'].values
             processed_docs = [wordtokenizer(x) for x in passages]
             self.processed_docs = processed_docs #used for train
@@ -126,7 +131,7 @@ class lda_model():
         str_tfidf = ''
         if self.tf_idf:
             str_tfidf = '-tf_idf'
-        save_name = 'lda_model' + str(self.k) + str_tfidf 
+        save_name = self.work_pathe + '\\model\\lda_model' + str(self.k) + str_tfidf 
         #if not os.path.isfile(save_name):
         self.model.save(save_name)
     
@@ -310,8 +315,8 @@ class lda_model():
         pyLDAvis.save_html(lda_display, save_name)
     
     def wordcloud_topic(self,sel_idx = []):
-        font = r'C:\\Windows\\Fonts\\simhei.ttf'
-        wc = wordcloud.WordCloud(font_path = font)
+        #font = r'C:\\Windows\\Fonts\\simhei.ttf'
+        wc = wordcloud.WordCloud()
         _inp = open('pro_docs.json','rb')
         self.processed_docs = json.load(_inp)
         _inp.close()
