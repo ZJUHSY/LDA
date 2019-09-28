@@ -17,8 +17,8 @@ import gensim
 from gensim.corpora.dictionary import Dictionary
 from gensim import models#,corpora
 import pyLDAvis.gensim
+from pro_docs_en import wordtokenizer #split english words
 #split word
-from jieba_prepare import jb_cut
 #worldcloud
 #from matplotlib import pyplot as plt
 import wordcloud
@@ -42,18 +42,20 @@ def process_data(path = 'test.json'):
     data = data.fillna('') #na request
     inp.close()
     data['time'] = pd.to_datetime(data.time.values)
-    #sort time 1st
-    data = data.sort_index(by = 'time',ascending = True)
-    data = data.drop_duplicates(subset=['passage'], keep=False)
+#    #sort time 1st
+#    data = data.sort_index(by = 'time',ascending = True)
+#    data = data.drop_duplicates(subset=['passage'], keep=False)
 
 class corp_dict(): #prouce 
-    def __init__(self,path = 'test.json',tf_idf = True,dic_below = 15,dic_above = 0.9,dic_keep = 80000,new = False): #tf_idf: whether or not use tf_idf method to produce
+    def __init__(self,path = 'test.json',tf_idf = True,dic_below = 5,dic_above = 0.9,dic_keep = 30000,new = False): #tf_idf: whether or not use tf_idf method to produce
         if os.path.isfile('dictionary.gensim') and not new:#if new,corpus beside model should be loaded
             #load data
+            self.work_pathe = os.getcwd()
+            
             inp = open(path,'rb')
             self.data = pd.DataFrame(json.load(inp))
             inp.close()
-            _inp = open('pro_docs.json','rb')
+            _inp = open(self.work_pathe + '\\data\\pro_docs.json','rb')
             self.processed_docs = json.load(_inp)
             _inp.close()
             
@@ -65,11 +67,11 @@ class corp_dict(): #prouce
             return
         else:
             #use jieba to produce word list 
-            jb = jb_cut(path)
-            processed_docs = jb.process()
+            passages = self.data['passage'].values
+            processed_docs = [wordtokenizer(x) for x in passages]
             self.processed_docs = processed_docs #used for train
             
-            outp = open("pro_docs.json", 'w', encoding="utf-8")
+            outp = open(self.work_pathe + "\\data\\pro_docs.json", 'w', encoding="utf-8")
             outp.write(json.dumps(self.processed_docs, indent=4, ensure_ascii=False))
             outp.close()
             
