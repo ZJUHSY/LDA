@@ -10,8 +10,10 @@ import numpy as np
 import json
 
 class jb_cut():
-    
+
+    ###input: path(for data), add_file(path):add some domain words like blokchain, stop_file: get stopwords
     def __init__(self,path = 'test.json',add_file = 'blockchain_dic.txt',stop_file = 'stopwords-master/哈工大停用词表.txt'):
+
         inp = open(path,'rb')
         self.passages = json.load(inp)
         inp.close()
@@ -102,10 +104,9 @@ class jb_cut():
         stop_f.close()
         
         self.del_list = list(np.unique(np.array(del_list)))
-        
-        
-    def cut_words(self,passage):
-        jb_tmp = jieba.cut(passage,cut_all = False)
+
+    def cut_words(self, passage):  # input: a passage(str) output:list of filtered words
+        jb_tmp = jieba.cut(passage, cut_all=False)
         tmp = '/'.join(jb_tmp)
         word_list = tmp.split('/')
         res = []
@@ -114,10 +115,10 @@ class jb_cut():
                 continue
             if word.isalpha():
                 word = word.lower()
-            res.append(word)
+            res.append(word)  
         return res
-    
-    def process(self):
+
+    def process(self):  # use cut_words method to cut each passage's word and return lists of lists: processed_docs
         processed_docs = [] # store tokenized words
         index = 0
         for passage in self.passages:
