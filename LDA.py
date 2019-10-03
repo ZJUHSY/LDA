@@ -47,7 +47,7 @@ def process_data(path='test.json'):
 
 
 class corp_dict():  # get corpus and dicationary
-    def __init__(self, path='test.json', tf_idf=True, dic_below=15, dic_above=0.9, dic_keep=80000,
+    def __init__(self, path='test.json', tf_idf=False, dic_below=15, dic_above=0.9, dic_keep=80000,
                  new=False):  # tf_idf: whether or not use tf_idf method to produce
         if os.path.isfile('dictionary.gensim') and not new:  # if new,corpus beside model should be loaded
             # load data
@@ -130,6 +130,7 @@ class lda_model():
             # chunksize: equal to batch_size
             # passes: epoch
             # iterations: each one-sample traiing's maximum ite
+            # workers: the number of process pools(depend on the number of cores in the machine)
 
             ### loose parameters
             # eval_evary: no need to adjust
@@ -163,7 +164,7 @@ class lda_model():
      corpus and dic mgiht be new
     '''
 
-    def get_prep(self,
+    def get_prep(self,  # useless do not care
                  corpus):  # get the log-perplexitty of the chosen model, used for model evaluation(smaller better)
         # return self.model.bound(self.corpus)
         return self.model.log_perplexity(corpus)
