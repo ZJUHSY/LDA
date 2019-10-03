@@ -23,7 +23,7 @@ import datetime
 import matplotlib as mpl
 from scipy.special import comb
 
-
+global all_time_arr
 def find_events(win_len, gran, band_width, event_back_len):
     inp = open('test.json', 'rb')
     data = json.load(inp)
@@ -164,6 +164,6 @@ if __name__ == '__main__':
     event_time_set = find_events(args.win_len, args.granularity, args.band_width, args.event_back_len)
     all_idx = []
     for event_time in event_time_set:
-        sel_idx = find_index(str(event_time), args.gran, all_time_arr, win_len)  # use to extract one index
+        sel_idx = find_index(str(event_time), args.gran, all_time_arr, args.win_len)  # use to extract one index
         # event_idx_lst.append(sel_idx)
         all_idx.append(sel_idx)
