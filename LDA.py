@@ -107,12 +107,15 @@ class corp_dict():  # get corpus and dicationary
 class lda_model():
     def __init__(self, topic_num, corpus, dictionary, ite, ps, ck_size, alpha, decay, tf_idf=True,
                  path=None):  # decide topic num for LDA
+        _inp = open('pro_docs.json', 'rb')  # stored in current folder
+        self.processed_docs = json.load(_inp)
+        _inp.close()
         self.corpus = corpus  # corpus vector
         self.dic = dictionary  # dictionary
         self.tf_idf = tf_idf
         self.root = os.getcwd()  # root path
         if path and os.path.isfile(self.root + '/models/' + path):
-            self.model = gensim.models.ldamodel.LdaModel.load(path)  # load model is exist
+            self.model = gensim.models.ldamodel.LdaModel.load(self.root + '/models/' + path)  # load model is exist
         else:
             # train
             self.model = gensim.models.LdaMulticore(corpus=corpus, num_topics=topic_num, id2word=dictionary,
@@ -302,8 +305,8 @@ class lda_model():
         str_event = ''
         if len(time_index) != 0:
             str_event = '--event-labeled'
-        title = os.getcwd()
-        title += '/HTML/' + 'per-document-tsne-vis' + 'lda_model' + str(self.k) + str_tfidf + str_event
+        # title = os.getcwd()
+        title = self.root + '/HTML/' + 'per-document-tsne-vis' + 'lda_model' + str(self.k) + str_tfidf + str_event
         # num_example = self.doc_topic_weight.shape[0]
         print(title)
 
@@ -360,9 +363,7 @@ class lda_model():
                         sel_idx=[]):  # input: select_index(can be empty) output: saved png for chosen corpora's wordcloud
         font = r'C:\\Windows\\Fonts\\simhei.ttf'  # this is the setting to get font, path different from ssystems and PC
         wc = wordcloud.WordCloud(font_path=font)
-        _inp = open('pro_docs.json', 'rb')
-        self.processed_docs = json.load(_inp)
-        _inp.close()
+
         if len(sel_idx) != 0:
             ext_list = [' '.join(x) for x in np.array(self.processed_docs)[sel_idx]]
         else:
