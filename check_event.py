@@ -109,6 +109,12 @@ def find_events(win_len, gran, band_width, event_back_len):  # select all the ev
 
     plot_smooth_semantic(tmp, gran)
     tmp['power'] = args.beta * abs(tmp['scale_semantic'].values) + (1 - args.beta) * tmp['scale_read_num'].values
+
+    ## 如果长度过小，直接返回极值作为event
+    if tmp.shape[0] < 2 * max(event_back_len, win_len):
+        event_time_lst = np.argmax(tmp['power'])
+        return event_time_lst, all_time_arr
+
     power_avg = tmp['power'].rolling(window=event_back_len, min_periods=2).mean().shift()
     power_std = tmp['power'].rolling(window=event_back_len, min_periods=2).std().shift()
     up_band = np.array(power_avg + band_width * power_std)
