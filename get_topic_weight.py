@@ -45,9 +45,9 @@ def get_model(corpus, dic, k, ck_size=32, ps=10, ite=5, decay=0.5):  # k is the 
 # input
 def get_topic_weight(k,
                      sel_idx=[]):  # output: 1. get the per-document topic vector 2. get each document's most relevant topic index
-    dictioary = get_dic()
+    dictionary = get_dic()
     corpus = get_corp()
-    model = get_model(k=k, corpus=corpus, dictionary=dictioary)
+    model = get_model(k=k, corpus=corpus, dic=dictionary)
 
     if len(sel_idx) != 0:
         corpus = list(np.array(corpus)[sel_idx])
@@ -71,17 +71,17 @@ def get_topic_weight(k,
     return doc_topic_weight, topic_arr
 
 
-def LDA_vis(k,sel_idx = [],pathe = None):
+def LDA_vis(k,sel_idx = []):
     #k: number of topics, sel_idx: index to choose  #output: html
-    dictioary = get_dic()
+    dictionary = get_dic()
     corpus = get_corp()
-    model = get_model(corpus=corpus, dictionary=dictioary, k=k, pathe = pathe)
+    model = get_model(corpus=corpus, dic=dictionary, k=k)
     model.lda_vis(sel_idx)
 
-def wc(k,sel_idx = [], pathe = None):  #produce png saved wordcloud
-    dictioary = get_dic()
+def wc(k,sel_idx = []):  #produce png saved wordcloud
+    dictionary = get_dic()
     corpus = get_corp()
-    model = get_model( corpus=corpus, dictionary=dictioary, k=k, pathe = pathe)
+    model = get_model(corpus=corpus, dic=dictionary, k=k)
     model.wordcloud_topic(sel_idx)
 
 
