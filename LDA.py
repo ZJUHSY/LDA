@@ -143,6 +143,9 @@ class lda_model():
         # self.model.
         self.k = topic_num
 
+    def get_k(self):
+        return self.k
+
     def load_model(self, path=''):  # load existing model else none
         if os.path.isfile(self.root + '/models/' + path):
             self.model = gensim.models.ldamodel.LdaModel.load(path)  # load model is exist
