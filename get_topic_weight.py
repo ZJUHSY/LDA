@@ -31,12 +31,10 @@ def get_corp(tf_idf = False):
     return corpus
 
 
-def get_model(corpus, dic, k, ck_size=32, ps=10, ite=5, decay=0.5, pathe = None):  # k is the topic number
-    if pathe: #read directly
-        _lda_model = lda_model(path = pathe)
-        return _lda_model
+def get_model(corpus, dic, k, ck_size=32, ps=10, ite=5, decay=0.5):  # k is the topic number
+
     _lda_model = lda_model(topic_num=k, corpus=corpus, dictionary=dic, ite=ite, ps=ps, alpha='asymmetric',
-                           ck_size=ck_size, decay=decay)
+                           ck_size=ck_size, decay=decay,path = 'lda_model' + str(k))
     return _lda_model
 
 
