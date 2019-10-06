@@ -18,7 +18,10 @@ from gensim.corpora.dictionary import Dictionary
 from gensim import models  # ,corpora
 import pyLDAvis.gensim
 # split word
-from .jieba_prepare import jb_cut
+try:
+    from .jieba_prepare import jb_cut
+except:
+    from jieba_prepare import jb_cut
 # worldcloud
 # from matplotlib import pyplot as plt
 import wordcloud

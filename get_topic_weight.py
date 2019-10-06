@@ -1,12 +1,16 @@
 import argparse
 import json
 import numpy as np
-from .LDA import lda_model
+try:
+    from .LDA import lda_model
+except:
+    from LDA import lda_model
 import gensim
 import pickle
 import random as rd
 from gensim.models import CoherenceModel
 import pandas as pd
+import os
 
 
 # get processed docs
@@ -19,15 +23,15 @@ def get_processed_docs():
 
 # get dictionary
 def get_dic():
-    return gensim.corpora.Dictionary.load('dictionary.gensim')
+    return gensim.corpora.Dictionary.load(os.path.join(os.path.dirname(__file__), 'dictionary.gensim'))
 
 
 # get corpus
 def get_corp(tf_idf = False):
     if tf_idf:
-        corpus = pickle.load(open('corpus.pkl_tfidf', 'rb'))
+        corpus = pickle.load(open(os.path.join(os.path.dirname(__file__), 'corpus.pkl_tfidf'), 'rb'))
     else:
-        corpus = pickle.load(open('corpus.pkl', 'rb'))
+        corpus = pickle.load(open(os.path.join(os.path.dirname(__file__), 'corpus.pkl'), 'rb'))
     return corpus
 
 
