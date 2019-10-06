@@ -1,3 +1,10 @@
+html
+models
+corpus.pkl
+corpus.pkl_tfidf
+dictionary.gensim
+pro_docs.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

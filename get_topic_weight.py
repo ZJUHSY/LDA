@@ -1,7 +1,7 @@
 import argparse
 import json
 import numpy as np
-from LDA import lda_model
+from .LDA import lda_model
 import gensim
 import pickle
 import random as rd
