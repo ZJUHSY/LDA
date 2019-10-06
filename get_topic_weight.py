@@ -23,7 +23,7 @@ def get_dic():
 
 
 # get corpus
-def get_corp(tf_idf):
+def get_corp(tf_idf = False):
     if tf_idf:
         corpus = pickle.load(open('corpus.pkl_tfidf', 'rb'))
     else:
@@ -31,8 +31,11 @@ def get_corp(tf_idf):
     return corpus
 
 
-def get_model(corpus, dic, k, ck_size=32, ps=10, ite=5, decay=0.5):  # k is the topic number
-    _lda_model = lda_model(topic_num=k, corpus=corpus, dictionary=dic, ite=ite, ps=ps,
+def get_model(corpus, dic, k, ck_size=32, ps=10, ite=5, decay=0.5, pathe = None):  # k is the topic number
+    if pathe: #read directly
+        _lda_model = lda_model(path = pathe)
+        return _lda_model
+    _lda_model = lda_model(topic_num=k, corpus=corpus, dictionary=dic, ite=ite, ps=ps, alpha='asymmetric',
                            ck_size=ck_size, decay=decay)
     return _lda_model
 
@@ -64,3 +67,21 @@ def get_topic_weight(k,
     doc_topic_weight = np.array(doc_topic_weight)  # [_idx]#get per-doc topic weight matrix for tsne
     topic_arr = np.argmax(doc_topic_weight, axis=1)  # every most document's most related topic
     return doc_topic_weight, topic_arr
+
+
+def LDA_vis(k,sel_idx = [],pathe = None):
+    #k: number of topics, sel_idx: index to choose  #output: html
+    dictioary = get_dic()
+    corpus = get_corp()
+    model = get_model(corpus=corpus, dictionary=dictioary, k=k, pathe = pathe)
+    model.lda_vis(sel_idx)
+
+def wc(k,sel_idx = [], pathe = None):  #produce png saved wordcloud
+    dictioary = get_dic()
+    corpus = get_corp()
+    model = get_model( corpus=corpus, dictionary=dictioary, k=k, pathe = pathe)
+    model.wordcloud_topic(sel_idx)
+
+
+def save_model(model): #input: LDA_model
+    model.save_model()

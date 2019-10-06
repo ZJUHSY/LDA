@@ -114,8 +114,8 @@ class lda_model():
         self.dic = dictionary  # dictionary
         self.tf_idf = tf_idf
         self.root = os.getcwd()  # root path
-        if path and os.path.isfile(self.root + '/models/' + path):
-            self.model = gensim.models.ldamodel.LdaModel.load(self.root + '/models/' + path)  # load model is exist
+        if path and os.path.isfile(self.root + '\\models\\' + path):
+            self.model = gensim.models.ldamodel.LdaModel.load(self.root + '\\models\\' + path)  # load model is exist
         else:
             # train
             self.model = gensim.models.LdaMulticore(corpus=corpus, num_topics=topic_num, id2word=dictionary,
@@ -157,7 +157,7 @@ class lda_model():
         str_tfidf = ''
         if self.tf_idf:
             str_tfidf = '-tf_idf'
-        save_name = self.root + '/models/lda_model' + str(self.k) + str_tfidf
+        save_name = self.root + '\\models\\lda_model' + str(self.k) + str_tfidf
         # if not os.path.isfile(save_name):
         self.model.save(save_name)
 
@@ -354,7 +354,7 @@ class lda_model():
         # pyLDAvis.display(lda_display)
         # save to html
         # topic_num = 4
-        save_name = self.root + '/HTML/'
+        save_name = self.root + '\\HTML\\'
 
         save_name += 'lda' + str(self.k)
         if len(time_index) != 0:
