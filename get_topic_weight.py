@@ -39,6 +39,7 @@ def get_model(corpus, dic, k, ck_size=32, ps=10, ite=5, decay=0.5):  # k is the 
 
     _lda_model = lda_model(topic_num=k, corpus=corpus, dictionary=dic, ite=ite, ps=ps, alpha='asymmetric',
                            ck_size=ck_size, decay=decay,path = 'lda_model' + str(k))
+    _lda_model.save_model()
     return _lda_model
 
 
