@@ -108,7 +108,7 @@ class corp_dict():  # get corpus and dicationary
 
 
 class lda_model():
-    def __init__(self, topic_num, corpus, dictionary, ite, ps, ck_size, alpha, decay, tf_idf=True,
+    def __init__(self, topic_num, corpus, dictionary, ite, ps, ck_size, alpha, decay, tf_idf=False,
                  path=None):  # decide topic num for LDA
         _inp = open('pro_docs.json', 'rb')  # stored in current folder
         self.processed_docs = json.load(_inp)
@@ -146,6 +146,8 @@ class lda_model():
         # self.model.
         self.k = topic_num
 
+    def get_model(self):
+        return self.model
     def get_k(self):
         return self.k
 

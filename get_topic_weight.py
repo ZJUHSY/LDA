@@ -29,8 +29,12 @@ def get_dic():
 # get corpus
 def get_corp(tf_idf = False):
     if tf_idf:
+
+        #corpus = pickle.load(open('corpus.pkl_tfidf','rb'))
         corpus = pickle.load(open(os.path.join(os.path.dirname(__file__), 'corpus.pkl_tfidf'), 'rb'))
     else:
+
+        #corpus = pickle.load(open('corpus.pkl','rb'))
         corpus = pickle.load(open(os.path.join(os.path.dirname(__file__), 'corpus.pkl'), 'rb'))
     return corpus
 
@@ -38,7 +42,7 @@ def get_corp(tf_idf = False):
 def get_model(corpus, dic, k, ck_size=32, ps=10, ite=5, decay=0.5):  # k is the topic number
 
     _lda_model = lda_model(topic_num=k, corpus=corpus, dictionary=dic, ite=ite, ps=ps, alpha='asymmetric',
-                           ck_size=ck_size, decay=decay,path = 'lda_model' + str(k))
+                           ck_size=ck_size, decay=decay, path = 'lda_model' + str(k))
     _lda_model.save_model()
     return _lda_model
 
@@ -49,11 +53,11 @@ def get_topic_weight(k,
     dictionary = get_dic()
     corpus = get_corp()
     model = get_model(k=k, corpus=corpus, dic=dictionary)
-
+    _lda_model  = model.get_model()
     if len(sel_idx) != 0:
         corpus = list(np.array(corpus)[sel_idx])
 
-    doc_topic_mat = model[corpus]
+    doc_topic_mat = _lda_model[corpus]
     doc_topic_weight = []
     for doc in doc_topic_mat:
         # print(doc)
@@ -88,3 +92,16 @@ def wc(k,sel_idx = []):  #produce png saved wordcloud
 
 def save_model(model): #input: LDA_model
     model.save_model()
+
+k = 8
+get_topic_weight(k)
+
+# model_path = os.getcwd() + '\\models\\'
+# dictionary = gensim.corpora.Dictionary.load(os.path.join(os.path.dirname(__file__), 'dictionary.gensim'))
+# # dictionary = gensim.corpora.Dictionary.load('dictionary.gensim')
+# corpus = pickle.load(open(os.path.join(os.path.dirname(__file__), 'corpus.pkl'), 'rb'))
+# # corpus = pickle.load(open('corpus.pkl', 'rb'))
+# model = get_model(k=k, corpus=corpus, dic=dictionary)
+# _lda_model = model.get_model()
+# # _lda_model = gensim.models.ldamodel.LdaModel.load(model_path + 'lda_model'+str(k))
+# aa = _lda_model[corpus]
