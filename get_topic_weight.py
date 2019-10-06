@@ -47,7 +47,7 @@ def get_topic_weight(k,
                      sel_idx=[]):  # output: 1. get the per-document topic vector 2. get each document's most relevant topic index
     dictioary = get_dic()
     corpus = get_corp()
-    model = get_model(topic_num=k, corpus=corpus, dictionary=dictioary)
+    model = get_model(k=k, corpus=corpus, dictionary=dictioary)
 
     if len(sel_idx) != 0:
         corpus = list(np.array(corpus)[sel_idx])
