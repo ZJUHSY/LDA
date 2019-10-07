@@ -17,6 +17,7 @@ import gensim
 from gensim.corpora.dictionary import Dictionary
 from gensim import models  # ,corpora
 import pyLDAvis.gensim
+from translate import Translator
 # split word
 try:
     from .jieba_prepare import jb_cut
@@ -349,11 +350,15 @@ class lda_model():
         # save the plot
         save(plot_lda, '{}.html'.format(title))
 
-    def lda_vis(self, time_index=[]):  # input:select_index(can be empty) output: visualization of the model
-        if len(time_index) == 0:
-            lda_display = pyLDAvis.gensim.prepare(self.model, self.corpus, self.dic, sort_topics=False)
+    def lda_vis(self, time_index=[], en = False):  # input:select_index(can be empty) output: visualization of the model
+        if en:
+            dic = gensim.corpora.Dictionary.load('en_dictionary.gensim')
         else:
-            lda_display = pyLDAvis.gensim.prepare(self.model, list(np.array(self.corpus)[time_index]), self.dic,
+            dic = self.dic
+        if len(time_index) == 0:
+            lda_display = pyLDAvis.gensim.prepare(self.model, self.corpus, dic, sort_topics=False)
+        else:
+            lda_display = pyLDAvis.gensim.prepare(self.model, list(np.array(self.corpus)[time_index]), dic,
                                                   sort_topics=False)
 
         # pyLDAvis.display(lda_display)
