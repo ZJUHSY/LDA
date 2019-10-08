@@ -32,7 +32,7 @@ from scipy.special import comb
 # output: all_time_arr: the overall array of time used for another function only
 # output: event_time_set: list (set of event time)
 
-def find_events(win_len, gran, band_width, event_back_len):  # select all the event point index
+def find_events(win_len, gran, band_width, event_back_len, beta):  # select all the event point index
 
     inp = open('test.json', 'rb')
     data = json.load(inp)
@@ -108,7 +108,7 @@ def find_events(win_len, gran, band_width, event_back_len):  # select all the ev
         _smooth)
 
     plot_smooth_semantic(tmp, gran)
-    tmp['power'] = args.beta * abs(tmp['scale_semantic'].values) + (1 - args.beta) * tmp['scale_read_num'].values
+    tmp['power'] = beta * abs(tmp['scale_semantic'].values) + (1 - beta) * tmp['scale_read_num'].values
 
     ## 如果长度过小，直接返回极值作为event
     if tmp.shape[0] < 2 * max(event_back_len, win_len):

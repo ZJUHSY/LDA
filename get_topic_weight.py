@@ -125,50 +125,56 @@ def save_model(model): #input: LDA_model
 
 
 
+k_lst = range(6,8)
+corpus = get_corp()
+dic = get_dic()
+for k in k_lst:
+    _lda_model = get_model(corpus, dic, k)
+    #_lda_model = model.get_model()
+    _lda_model.lda_vis()
+    #summaries = topic_summaries(k, model=_lda_model)
+    # save_name = 'topic_summaires' + str(k) + '.txt'
+    # outp = open(os.path.join(os.path.dirname(__file__), 'summaries', save_name), 'w')
+    # outp.write(str(summaries))
+    # outp.close()
 
-# k_lst = range(4,9)
-# for k in k_lst:
-#     corpus = get_corp()
-#     dic = get_dic()
-#     model = get_model(corpus, dic, k)
-#     _lda_model = model.get_model()
-#     summaries = topic_summaries(k, model=_lda_model)
-#     save_name = 'topic_summaires' + str(k) + '.txt'
-#     outp = open(os.path.join(os.path.dirname(__file__), 'summaries', save_name), 'w')
-#     outp.write(str(summaries))
-#     outp.close()
+
 
 # for k in k_ls
 #     topic_weight, topic_arr = get_topic_weight(k)
 #     coord = tsne_coord(topic_weight)
 #     save_tsne_coord(k, coord, topic_arr)
 
-from translate import Translator
-_inp = open('pro_docs.json', 'rb')
-processed_docs = json.load(_inp)
-_inp.close()
-translator = Translator(from_lang='chinese', to_lang='english')
-for doc in processed_docs:
-    for idx, word in enumerate(doc):
-        print(word)
-        if word.encode('utf-8').isalnum():
-            doc[idx] = ps.stem(wordnet_lemmatizer.lemmatize(word))
-            continue
-        else:
-            try:
-                res = translator.translate(word)
-                doc[idx] = res
-                print(res)
-            except:
-                print('original')
-outp = open('en_pro_docs.json', 'w')
-outp.write(json.dumps(processed_docs))
-outp.close()
-from gensim.corpora.dictionary import Dictionary
-dictionary = Dictionary(processed_docs)
-dictionary.filter_extremes(no_below=15, no_above=0.9, keep_n=80000)
-dictionary.save('en_dictionary.gensim')
-corpus = get_corp()
-dic = get_dic()
-model = get_model(corpus, dic, 5)
-model.lda_vis(en=True)
+
+
+
+
+# from translate import Translator
+# _inp = open('pro_docs.json', 'rb')
+# processed_docs = json.load(_inp)
+# _inp.close()
+# translator = Translator(from_lang='chinese', to_lang='english')
+# for doc in processed_docs:
+#     for idx, word in enumerate(doc):
+#         print(word)
+#         if word.encode('utf-8').isalnum():
+#             doc[idx] = ps.stem(wordnet_lemmatizer.lemmatize(word))
+#             continue
+#         else:
+#             try:
+#                 res = translator.translate(word)
+#                 doc[idx] = res
+#                 print(res)
+#             except:
+#                 print('original')
+# outp = open('en_pro_docs.json', 'w')
+# outp.write(json.dumps(processed_docs))
+# outp.close()
+# from gensim.corpora.dictionary import Dictionary
+# dictionary = Dictionary(processed_docs)
+# dictionary.filter_extremes(no_below=15, no_above=0.9, keep_n=80000)
+# dictionary.save('en_dictionary.gensim')
+# corpus = get_corp()
+# dic = get_dic()
+# model = get_model(corpus, dic, 5)
+# model.lda_vis(en=True)
